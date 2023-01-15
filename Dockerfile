@@ -16,6 +16,7 @@ ARG SYMFONY_VERSION=""
 ENV SYMFONY_VERSION ${SYMFONY_VERSION}
 
 ENV APP_ENV=prod
+ENV PORT=8080
 
 WORKDIR /srv/app
 
@@ -56,6 +57,9 @@ HEALTHCHECK --interval=10s --timeout=3s --retries=3 CMD ["docker-healthcheck"]
 
 COPY docker/php/docker-entrypoint.sh /usr/local/bin/docker-entrypoint
 RUN chmod +x /usr/local/bin/docker-entrypoint
+
+# Expose the port that your application will listen on
+EXPOSE ${PORT}
 
 ENTRYPOINT ["docker-entrypoint"]
 CMD ["php-fpm"]
