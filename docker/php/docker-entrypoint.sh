@@ -56,7 +56,7 @@ if [ "$1" = 'php-fpm' ] || [ "$1" = 'php' ] || [ "$1" = 'bin/console' ]; then
 			echo "The db is now ready and reachable"
 		fi
 
-		if [ "$( find ./migrations -iname '*.php' -print -quit )" ]; then
+		if [ "$(find ./migrations -iname '*.php' -print -quit)" ]; then
 			bin/console doctrine:migrations:migrate --no-interaction
 		fi
 	fi
@@ -65,4 +65,4 @@ if [ "$1" = 'php-fpm' ] || [ "$1" = 'php' ] || [ "$1" = 'bin/console' ]; then
 	setfacl -dR -m u:www-data:rwX -m u:"$(whoami)":rwX var
 fi
 
-exec docker-php-entrypoint "$@"
+exec docker-php-entrypoint "$@" --port=8080
